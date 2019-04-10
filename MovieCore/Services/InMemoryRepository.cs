@@ -53,6 +53,18 @@ namespace MovieCore.Services
             return null;
         }
 
+        public async Task<IEnumerable<MovieDetails>> GetMoviesByName(string name)
+        {
+            var movieIdsFromAllDatabase = (await GetAll()).Where(x => x.Title == name).Select(x => x.ID).ToList();
 
+            IList<MovieDetails> movies = new List<MovieDetails>();
+
+            foreach (var movidId in movieIdsFromAllDatabase)
+            {
+                movies.Add(await GetDetailsById(movidId));
+            }
+
+            return movies;
+        }
     }
 }

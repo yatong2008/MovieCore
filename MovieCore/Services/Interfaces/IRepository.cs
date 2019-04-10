@@ -9,5 +9,6 @@ namespace MovieCore.Services.Interfaces
         Task<IEnumerable<T>> GetAll();
         T GetById(string id);
         Task<MovieDetails> GetDetailsById(string id);
+        Task<IEnumerable<MovieDetails>> GetMoviesByName(string name);
     }
 }
