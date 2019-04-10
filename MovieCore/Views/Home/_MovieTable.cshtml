@@ -1,0 +1,17 @@
+﻿@model IEnumerable<MovieCore.ViewModels.MovieViewModel>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>DatabaseName</th>
+        </tr>
+    </thead>
+    @foreach (var m in Model)
+    {
+        <partial name="_MovieRow" for="@m" />
+    }
+</table>
+
+    

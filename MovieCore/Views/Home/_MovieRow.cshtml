@@ -1,0 +1,8 @@
+﻿@model MovieCore.ViewModels.MovieViewModel
+
+
+<tr>
+    <td>ID: @Model.Title, @Model.Poster</td>
+    <td><a asp-action="Detail" asp-route-id="@Model.ID">Detail</a></td>
+</tr>
+
