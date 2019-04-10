@@ -29,7 +29,6 @@ namespace MovieCore.Services
                 _allMovies = _allMovies.Concat(await movieService.GetAllAsync());
             }
 
-            Thread.Sleep(600);
             return _allMovies;
         }
 
