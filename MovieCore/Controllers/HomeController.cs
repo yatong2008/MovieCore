@@ -14,12 +14,6 @@ namespace MovieCore.Controllers
     {
         private readonly IRepository<MovieViewModel> _repository;
 
-        //private readonly IMovieService _movieService;
-
-        //public HomeController(IMovieService movieService)
-        //{
-        //    _movieService = movieService;
-        //}
         public HomeController(IRepository<MovieViewModel> repository)
         {
             _repository = repository;
@@ -27,7 +21,7 @@ namespace MovieCore.Controllers
 
         public async Task<ViewResult> Index()
         {
-            var movieList = await _repository.GetAll(); //_movieService.GetAllAsync().Result;
+            var movieList = await _repository.GetAll(); 
             var vms = movieList.Select(x => new MovieViewModel
             {
                 ID =  x.ID,
@@ -39,7 +33,7 @@ namespace MovieCore.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            var movieDetails = await _repository.GetDetailsById(id);// .GetDetailsByIdAsync(id).Result;
+            var movieDetails = await _repository.GetDetailsById(id);
             if (movieDetails == null)
                 //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
                 //return View("NotFound");
