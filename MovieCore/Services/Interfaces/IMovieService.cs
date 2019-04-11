@@ -8,6 +8,6 @@ namespace MovieCore.Services.Interfaces
     public interface IMovieService
     {
         Task<List<MovieViewModel>> GetAllAsync();
-        Task<MovieDetails> GetDetailsByIdAsync(string id);
+        Task<MovieDetailsViewModel> GetDetailsByIdAsync(string id);
     }
 }

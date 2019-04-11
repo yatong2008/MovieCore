@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MovieCore.Models;
+using MovieCore.ViewModels;
 
 namespace MovieCore.Services.Interfaces
 {
@@ -8,7 +9,9 @@ namespace MovieCore.Services.Interfaces
     {
         Task<IEnumerable<T>> GetAll();
         T GetById(string id);
-        Task<MovieDetails> GetDetailsById(string id);
-        Task<IEnumerable<MovieDetails>> GetMoviesByName(string name);
+        Task<IEnumerable<MovieDetailsViewModel>> GetDetailsById(string id);
+        Task<MovieDetailsViewModel> GetLowerPriceMovieDetailsById(string id);
+        Task<IEnumerable<T>> GetMovieSet();
+
     }
 }

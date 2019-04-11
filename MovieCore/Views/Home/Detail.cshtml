@@ -1,11 +1,11 @@
-﻿@model MovieDetails
+﻿@model MovieCore.ViewModels.MovieDetailsViewModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = Model.Title;
     Layout = "_Layout";
 }
 
-<h1>DatabaseName @Model.ID @Model.Title</h1>
+<h1>@Model.Title</h1>
 
 <div class="row">
     <div class="col-sm-3">
@@ -30,7 +30,7 @@
             <tr><td>Votes</td><td>@Model.Votes</td></tr>
             <tr><td>ID</td><td>@Model.ID</td></tr>
             <tr><td>Type</td><td>@Model.Type</td></tr>
-            <tr><td>Price</td><td class="danger">@Model.Price (Best Price from ABCDEFG)</td></tr>
+            <tr><td>Price</td><td class="danger">@Model.Price (Best Price from @Model.DatabaseName)</td></tr>
         </table>
     </div>
 

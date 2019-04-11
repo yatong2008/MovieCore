@@ -21,7 +21,7 @@ namespace MovieCore.Controllers
 
         public async Task<ViewResult> Index()
         {
-            var movieList = await _repository.GetAll(); 
+            var movieList = await _repository.GetMovieSet(); 
             var vms = movieList.Select(x => new MovieViewModel
             {
                 ID =  x.ID,
@@ -33,7 +33,7 @@ namespace MovieCore.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            var movieDetails = await _repository.GetDetailsById(id);
+            var movieDetails = await _repository.GetLowerPriceMovieDetailsById(id);
             if (movieDetails == null)
                 //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
                 //return View("NotFound");

@@ -40,17 +40,40 @@ namespace MovieCore.Services
 
         }
 
-
-        public async Task<MovieDetails> GetDetailsByIdAsync(string id)
+        public async Task<MovieDetailsViewModel> GetDetailsByIdAsync(string id)
         {
-            string url = $"{WebsiteDomain}/api/{DatabaseName}/movie/{id}";
+            string url = $"{WebsiteDomain}/api/{DatabaseName}/movie/fw{id}";
 
             var responseData = await HtmlGetHelper.GetResult(url);
 
             MovieDetails details = JsonMovieHelper.DeserializeJson<MovieDetails>(responseData);
 
-            return details;
+            var viewModel = new MovieDetailsViewModel
+            {
+                Title = details.Title,
+                Year = details.Year,
+                Rated = details.Rated,
+                Released = details.Released,
+                Runtime = details.Runtime,
+                Genre = details.Genre,
+                Director = details.Director,
+                Writer = details.Writer,
+                Actors = details.Actors,
+                Plot = details.Plot,
+                Language = details.Language,
+                Country = details.Country,
+                Awards = details.Awards,
+                Poster = details.Poster,
+                Metascore = details.Metascore,
+                Rating = details.Rating,
+                Votes = details.Votes,
+                ID = details.ID,
+                Type = details.Type,
+                Price = details.Price,
+                DatabaseName = DatabaseName
+            };
 
+            return viewModel;
         }
     }
 }

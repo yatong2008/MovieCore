@@ -32,39 +32,48 @@ namespace MovieCore.Services
             return _allMovies;
         }
 
+        public async Task<IEnumerable<MovieViewModel>> GetMovieSet()
+        {
+            _allMovies = await GetAll();
+
+            List<MovieViewModel> distinctMovies = _allMovies
+                .GroupBy(x => x.Title)
+                .Select(g => g.First())
+                .ToList();
+
+            return distinctMovies;
+        }
+
         public MovieViewModel GetById(string id)
         {
             var movie = _allMovies.FirstOrDefault(x => x.ID == id);
             return movie;
         }
 
-        public async Task<MovieDetails> GetDetailsById(string id)
+        public async Task<IEnumerable<MovieDetailsViewModel>> GetDetailsById(string id)
         {
+            var results = new List<MovieDetailsViewModel>();
 
             foreach (var movieService in _movieServices)
             {
-                var result = await movieService.GetDetailsByIdAsync(id);
-                if (result != null)
-                {
-                    return result;
-                }
+                results.Add(await movieService.GetDetailsByIdAsync(id));
             }
 
-            return null;
+            return results;
         }
 
-        public async Task<IEnumerable<MovieDetails>> GetMoviesByName(string name)
+        public async Task<MovieDetailsViewModel> GetLowerPriceMovieDetailsById(string id)
         {
-            var movieIdsFromAllDatabase = (await GetAll()).Where(x => x.Title == name).Select(x => x.ID).ToList();
+            var allowedChars = Enumerable.Range('0', 10);
+            var searchString = String.Concat(id.Where(c => allowedChars.Contains(c)));
 
-            IList<MovieDetails> movies = new List<MovieDetails>();
+            var movieIdsFromAllDatabase = (await GetAll()).Where(x => x.ID.Contains(searchString)).Select(x => x.ID).ToList();
 
-            foreach (var movidId in movieIdsFromAllDatabase)
-            {
-                movies.Add(await GetDetailsById(movidId));
-            }
+            var movies = await GetDetailsById(searchString);
 
-            return movies;
+            return movies.OrderBy(x => x.Price).FirstOrDefault();
         }
+
+
     }
 }
