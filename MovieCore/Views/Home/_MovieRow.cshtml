@@ -1,8 +1,23 @@
 ﻿@model MovieCore.ViewModels.MovieViewModel
 
-
 <tr>
-    <td>ID: @Model.Title, @Model.Poster</td>
-    <td><a asp-action="Detail" asp-route-id="@Model.ID">Detail</a></td>
+    <td>
+        <a asp-action="Detail" asp-route-id="@Model.ID"><img src="@Model.Poster" class="thumbnail" width="89"></a>
+        @*<a href="/Home/Detail/@Model.ID">
+            
+        </a>*@
+    </td>
+    <td>
+        <a asp-action="Detail" asp-route-id="@Model.ID">
+            <h2 class="textWapper" style="display: inline">@Model.Title</h2>
+            <span class="textWrapper">@Model.Year</span>
+        </a>
+
+
+        <a href="/Home/Detail/@Model.ID">
+            
+        </a>
+        
+    </td>
 </tr>
 
