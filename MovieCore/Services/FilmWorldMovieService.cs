@@ -48,32 +48,35 @@ namespace MovieCore.Services
 
             MovieDetails details = JsonMovieHelper.DeserializeJson<MovieDetails>(responseData);
 
-            var viewModel = new MovieDetailsViewModel
+            if (details != null)
             {
-                Title = details.Title,
-                Year = details.Year,
-                Rated = details.Rated,
-                Released = details.Released,
-                Runtime = details.Runtime,
-                Genre = details.Genre,
-                Director = details.Director,
-                Writer = details.Writer,
-                Actors = details.Actors,
-                Plot = details.Plot,
-                Language = details.Language,
-                Country = details.Country,
-                Awards = details.Awards,
-                Poster = details.Poster,
-                Metascore = details.Metascore,
-                Rating = details.Rating,
-                Votes = details.Votes,
-                ID = details.ID,
-                Type = details.Type,
-                Price = details.Price,
-                DatabaseName = DatabaseName
-            };
+                return new MovieDetailsViewModel
+                {
+                    Title = details.Title,
+                    Year = details.Year,
+                    Rated = details.Rated,
+                    Released = details.Released,
+                    Runtime = details.Runtime,
+                    Genre = details.Genre,
+                    Director = details.Director,
+                    Writer = details.Writer,
+                    Actors = details.Actors,
+                    Plot = details.Plot,
+                    Language = details.Language,
+                    Country = details.Country,
+                    Awards = details.Awards,
+                    Poster = details.Poster,
+                    Metascore = details.Metascore,
+                    Rating = details.Rating,
+                    Votes = details.Votes,
+                    ID = details.ID,
+                    Type = details.Type,
+                    Price = details.Price,
+                    DatabaseName = DatabaseName
+                };
+            }
 
-            return viewModel;
+            return null;
         }
     }
 }

@@ -56,7 +56,11 @@ namespace MovieCore.Services
 
             foreach (var movieService in _movieServices)
             {
-                results.Add(await movieService.GetDetailsByIdAsync(id));
+                var movieDetails = await movieService.GetDetailsByIdAsync(id);
+                if (movieDetails != null)
+                {
+                    results.Add(movieDetails);
+                }
             }
 
             return results;
