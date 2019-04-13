@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using MovieCore.Models;
 using MovieCore.Services.Interfaces;
 using MovieCore.ViewModels;

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MovieCore.Models;
 using MovieCore.Services.Interfaces;
 using MovieCore.ViewModels;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MovieCore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IRepository<MovieViewModel> _repository;
-
         public HomeController(IRepository<MovieViewModel> repository)
         {
             _repository = repository;

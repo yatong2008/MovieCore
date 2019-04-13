@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Views\Home\_MovieRow.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

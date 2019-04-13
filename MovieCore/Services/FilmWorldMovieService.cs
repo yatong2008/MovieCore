@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using MovieCore.Helpers;
 using MovieCore.Models;
 using MovieCore.Services.Interfaces;
@@ -11,21 +13,30 @@ namespace MovieCore.Services
     {
         private const string DatabaseName = "filmworld";
         private const string WebsiteDomain = "http://webjetapitest.azurewebsites.net";
+        private readonly IEnumerable<KeyValuePair<string, string>> _headers;
+        private readonly string _headerKey = "x-access-token";
+
+        public FilmWorldMovieService(IConfiguration configuration)
+        {
+            _headers = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>(_headerKey, configuration.GetSection("AppSettings")[_headerKey])
+            };
+        }
 
         public async Task<List<MovieViewModel>> GetAllAsync()
         {
-            string url = $"{WebsiteDomain}/api/{DatabaseName}/movies";
+            var url = $"{WebsiteDomain}/api/{DatabaseName}/movies";
 
-            var responseData = await HtmlGetHelper.GetResult(url);
+            var responseData = await HtmlGetHelper.GetResult(url, _headers);
 
-            MovieDatabase mdb = JsonMovieHelper.DeserializeJson<MovieDatabase>(responseData);
+            var mdb = JsonMovieHelper.DeserializeJson<MovieDatabase>(responseData);
 
             var movies = new List<MovieViewModel>();
 
-
-            foreach (var m in mdb.Movies)
+            if (mdb != null)
             {
-                movies.Add(new MovieViewModel()
+                movies.AddRange(mdb.Movies.Select(m => new MovieViewModel
                 {
                     ID = m.ID,
                     DatabaseName = DatabaseName,
@@ -33,7 +44,7 @@ namespace MovieCore.Services
                     Title = m.Title,
                     Type = m.Type,
                     Year = m.Year
-                });
+                }));
             }
 
             return movies;
@@ -44,7 +55,7 @@ namespace MovieCore.Services
         {
             string url = $"{WebsiteDomain}/api/{DatabaseName}/movie/fw{id}";
 
-            var responseData = await HtmlGetHelper.GetResult(url);
+            var responseData = await HtmlGetHelper.GetResult(url, _headers);
 
             MovieDetails details = JsonMovieHelper.DeserializeJson<MovieDetails>(responseData);
 

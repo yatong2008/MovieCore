@@ -1,22 +1,29 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Twitter;
 
 namespace MovieCore.Helpers
 {
     public class HtmlGetHelper
     {
-        private const string AccessToken = "";
 
-        public static async Task<string> GetResult(string url)
+        public static async Task<string> GetResult(string url, IEnumerable<KeyValuePair<string, string>> headers)
         {
-            HttpWebRequest webRequest = WebRequest.Create(url) as HttpWebRequest;
-            webRequest.Headers.Add("x-access-token", AccessToken);
+            HttpWebRequest webRequest = WebRequest.Create(url)  as HttpWebRequest;
+
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    webRequest?.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             webRequest.Method = "GET";
+
             try
             {
 
