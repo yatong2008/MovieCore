@@ -2,10 +2,9 @@
 
 <tr>
     <td>
-        <a asp-action="Detail" asp-route-id="@Model.ID"><img src="@Model.Poster" class="thumbnail" width="89"></a>
-        @*<a href="/Home/Detail/@Model.ID">
-            
-        </a>*@
+        <a asp-action="Detail" asp-route-id="@Model.ID">
+            <img src="@Model.Poster" onerror="this.onerror = null; this.src='https://yt3.ggpht.com/a-/AAuE7mDrGwDBII_0LO6cM4ud7pVuGIJXSlLrZYEO-Q=s900-mo-c-c0xffffffff-rj-k-no'" class="thumbnail" width="89">
+        </a>
     </td>
     <td>
         <a asp-action="Detail" asp-route-id="@Model.ID">
