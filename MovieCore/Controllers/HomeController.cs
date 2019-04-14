@@ -31,9 +31,9 @@ namespace MovieCore.Controllers
         public async Task<IActionResult> Detail(string id)
         {
             var movies = await _repository.SearchMoviesByDigits(id);
-            if (movies == null)
+            if (movies == null || !movies.Any())
             {
-                return Redirect("Index");
+                return Redirect("/");
             }
 
             var movieDetails = _repository.GetLowerPriceMovieDetails(movies);
