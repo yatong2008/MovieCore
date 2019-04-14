@@ -27,7 +27,10 @@ namespace MovieCore.Services
             _allMovies = new List<MovieViewModel>();
             foreach (IMovieService movieService in _movieServices)
             {
-                _allMovies = _allMovies.Concat(await movieService.GetAllAsync());
+                var moviesFromService = await movieService.GetAllAsync();
+
+                if (moviesFromService != null)
+                    _allMovies = _allMovies.Concat(moviesFromService);
             }
 
             return _allMovies;
@@ -45,11 +48,6 @@ namespace MovieCore.Services
             return distinctMovies;
         }
 
-        public MovieViewModel GetById(string id)
-        {
-            var movie = _allMovies.FirstOrDefault(x => x.ID == id);
-            return movie;
-        }
 
         public async Task<IEnumerable<MovieDetailsViewModel>> GetDetailsById(string id)
         {
@@ -67,16 +65,19 @@ namespace MovieCore.Services
             return results;
         }
 
-        public async Task<MovieDetailsViewModel> GetLowerPriceMovieDetailsById(string id)
+        public async Task<IEnumerable<MovieDetailsViewModel>> SearchMoviesByDigits(string id)
         {
             var allowedChars = Enumerable.Range('0', 10);
             var searchString = String.Concat(id.Where(c => allowedChars.Contains(c)));
+            var results = await GetDetailsById(searchString);
 
-            var movieIdsFromAllDatabase = (await GetAll()).Where(x => x.ID.Contains(searchString)).Select(x => x.ID).ToList();
+            return results;
+        }
 
-            var movies = await GetDetailsById(searchString);
-
-            return movies.OrderBy(x => x.Price).FirstOrDefault();
+        public MovieDetailsViewModel GetLowerPriceMovieDetails(IEnumerable<MovieDetailsViewModel> movieSet)
+        {
+            var result = movieSet.OrderBy(x => x.Price).FirstOrDefault();
+            return result;
         }
 
 

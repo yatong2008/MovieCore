@@ -30,12 +30,13 @@ namespace MovieCore.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            var movieDetails = await _repository.GetLowerPriceMovieDetailsById(id);
-            if (movieDetails == null)
-                //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-                //return View("NotFound");
+            var movies = await _repository.SearchMoviesByDigits(id);
+            if (movies == null)
+            {
                 return Redirect("Index");
+            }
 
+            var movieDetails = _repository.GetLowerPriceMovieDetails(movies);
             return View(movieDetails);
         }
 

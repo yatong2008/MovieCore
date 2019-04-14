@@ -8,10 +8,9 @@ namespace MovieCore.Services.Interfaces
     public interface IRepository<T> where T:class
     {
         Task<IEnumerable<T>> GetAll();
-        T GetById(string id);
         Task<IEnumerable<MovieDetailsViewModel>> GetDetailsById(string id);
-        Task<MovieDetailsViewModel> GetLowerPriceMovieDetailsById(string id);
         Task<IEnumerable<T>> GetMovieSet();
-
+        Task<IEnumerable<MovieDetailsViewModel>> SearchMoviesByDigits(string id);
+        MovieDetailsViewModel GetLowerPriceMovieDetails(IEnumerable<MovieDetailsViewModel> movieSet);
     }
 }
